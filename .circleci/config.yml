@@ -5,6 +5,8 @@ executors:
   default:
     docker:
       - image: cimg/node:16.15-browsers
+      steps:
+        - run: sudo apt-get install python3
     working_directory: ~/repo
 commands:
   npm_install:
@@ -36,7 +38,6 @@ jobs:
   deploy:
     executor: default
     steps:
-      - run: yum install python3
       - attach_workspace:
           at: ~/repo/frontend/react-app
       - aws-s3/sync:
