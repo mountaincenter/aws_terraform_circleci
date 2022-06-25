@@ -36,6 +36,8 @@ jobs:
   deploy:
     executor: default
     steps:
+      - attach_workspace:
+          at: ~/repo
       - run:
           command: pwd && ls -al
       # - aws-s3/sync:
