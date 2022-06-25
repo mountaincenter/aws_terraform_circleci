@@ -15,9 +15,8 @@ commands:
             - v2-dependencies-
       - run:
           working_directroy: frontend/react-app
-          command: npm install
+          command: cd frontend/react-app && npm install
       - save_cache:
-          working_directroy: frontend/react-app
           paths:
             - node_modules
           key: v2-dependencies-{{ checksum "./frontend/react-app/package.json" }}
@@ -28,8 +27,7 @@ jobs:
       - checkout
       - npm_install
       - run:
-          working_directroy: frontend/react-app
-          command: npm run build
+          command: cd ./frontend/react-app && npm run build
       - persist_to_workspace:
           root: frontend/react-app
           paths:
