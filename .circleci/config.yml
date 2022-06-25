@@ -34,9 +34,11 @@ jobs:
             - "*"
             - ".*"
   deploy:
-    excutor: default
+    executor: default
     steps:
-      - run: npm install python && cd frontend/react-app/
+      - run: yum install python3
+      - attach_workspace:
+          at: ~/repo/frontend/react-app
       - aws-s3/sync:
           arguments: |
             --acl public-read \
