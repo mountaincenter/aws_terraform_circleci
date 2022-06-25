@@ -5,7 +5,6 @@ executors:
   default:
     docker:
       - image: cimg/node:16.15-browsers
-      - image: cimg/python:3.6
     working_directory: ~/repo
 commands:
   npm_install:
@@ -28,7 +27,7 @@ jobs:
       - checkout
       - npm_install
       - run:
-          command: npm install python3 && cd ./frontend/react-app && npm run build
+          command: cd ./frontend/react-app && npm run build
       - persist_to_workspace:
           root: frontend/react-app
           paths:
@@ -39,6 +38,7 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/repo/frontend/react-app
+      - run: npm install python3
       - aws-s3/sync:
           from: build
           to: s3://web.ymnk.fun
