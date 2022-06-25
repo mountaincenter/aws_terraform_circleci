@@ -1,26 +1,49 @@
 version: 2.1
 orbs:
-  aws-s3: circleci/aws-s3@3.0.0
+  aws-s3: circleci/aws-s3@1.0.11
+executors:
+  default:
+    docker:
+      - image: circleci/node:12
+    working_directory: ~/repo
+commands:
+  npm_install:
+    steps:
+      - restore_cache:
+          keys:
+            - v2-dependencies-{{ checksum "package.json" }}
+            - v2-dependencies-
+      - run: npm install
+      - save_cache:
+          paths:
+            - node_modules
+          key: v2-dependencies-{{ checksum "package.json" }}
 jobs:
   build:
-    docker:
-      - image: 'cimg/python:3.6'
+    executor: default
     steps:
       - checkout
-      - aws-s3/copy:
-          arguments: |
-            --acl public-read \
-            --acl bucket-owner-full-control \
-            --cache-control "max-age=86400"
-          aws-access-key-id: AWS_ACCESS_KEY_ID
-          aws-region: AWS_REGION
-          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
-          from: ./index.html
-          to: 's3://web.ymnk.fun'
+      - npm_install
+      - run: npm run build
+      - persist_to_workspace:
+          root: .
+          paths:
+            - "*"
+            - ".*"
+  deploy:
+    executor: default
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      - aws-s3/sync:
+          from: build
+          to: s3://web.ymnk.fun
+          overwrite: true
 workflows:
-  s3-example:
+  version: 2
+  build-deploy:
     jobs:
-      - build:
-          filters:
-            branches:
-              only: main
+      - build
+      - deploy:
+          requires:
+            - build
