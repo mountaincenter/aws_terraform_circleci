@@ -37,14 +37,13 @@ jobs:
     docker:
       - image: cimg/python:3.6
     steps:
-      - attach_workspace:
-          at: ~/repo/frontend/react-app
       - aws-s3/sync:
+          run: cd frontend/react-app
           arguments: |
             --acl public-read \
             --acl bucket-owner-full-control \
             --cache-control "max-age=86400"
-          from: ./repo/frontend/react-app/build
+          from: build
           to: s3://web.ymnk.fun
           overwrite: true
 workflows:
