@@ -44,7 +44,7 @@ jobs:
             --acl public-read \
             --acl bucket-owner-full-control \
             --cache-control "max-age=86400"
-          from: build
+          from: ./repo/frontend/react-app/build
           to: s3://web.ymnk.fun
           overwrite: true
 workflows:
