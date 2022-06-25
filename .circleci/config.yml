@@ -4,8 +4,8 @@ orbs:
 executors:
   default:
     docker:
-      - image: circleci/node:12
-    working_directory: ~/repo
+      - image: circleci/node:16:15
+    working_directory: ~/repo/frontend/react-app
 commands:
   npm_install:
     steps:
