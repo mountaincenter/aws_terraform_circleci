@@ -7,7 +7,7 @@ jobs:
       - image: 'cimg/python:3.6'
     steps:
       - checkout
-      - aws-s3/sync:
+      - aws-s3/copy:
           arguments: |
             --acl public-read \
             --acl bucket-owner-full-control \
@@ -16,10 +16,6 @@ jobs:
           aws-access-key-id: AWS_ACCESS_KEY_ID
           aws-region: AWS_REGION
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY
-          from: .
-          to: 's3://web.ymnk.fun'
-      - aws-s3/copy:
-          arguments: '--dryrun'
           from: ./index.html
           to: 's3://web.ymnk.fun'
 workflows:
