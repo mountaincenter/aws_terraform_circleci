@@ -9,8 +9,6 @@ executors:
 commands:
   npm_install:
     steps:
-      - run:
-          command: sudo apt-get install nodejs npm && sudo npm install n -g
       - restore_cache:
           keys:
             - v2-dependencies-{{ checksum "./frontend/react-app/package.json" }}
@@ -39,13 +37,13 @@ jobs:
     executor: default
     steps:
       - attach_workspace:
-          at: ~/repo/frontend/react-app
+          at: repo/frontend/react-app/build
       - aws-s3/sync:
           arguments: |
             --acl public-read \
             --acl bucket-owner-full-control \
             --cache-control "max-age=86400"
-          from: build
+          from: .
           to: s3://web.ymnk.fun
           overwrite: true
 workflows:
