@@ -28,7 +28,7 @@ jobs:
       - checkout
       - npm_install
       - run:
-          command: cd ./frontend/react-app && npm run build
+          command: npm install python3 && cd ./frontend/react-app && npm run build
       - persist_to_workspace:
           root: frontend/react-app
           paths:
