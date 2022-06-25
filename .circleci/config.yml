@@ -7,7 +7,7 @@ jobs:
       - image: 'cimg/python:3.6'
     steps:
       - checkout
-      - run: mkdir bucket && cd bucket && git clone git@github.com:mountaincenter/aws_terraform_circleci.git
+      - run: mkdir bucket && echo "lorem ipsum" > bucket/build_asset.txt
       - aws-s3/sync:
           arguments: |
             --acl public-read \
@@ -15,11 +15,11 @@ jobs:
           aws-access-key-id: AWS_ACCESS_KEY_ID
           aws-region: AWS_REGION
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY
-          from: project/bucket/aws_terraform_circleci
+          from: bucket
           to: 's3://web.ymnk.fun/prefix'
       - aws-s3/copy:
           arguments: '--dryrun'
-          from: project/bucket/aws_terraform_circleci/index.html
+          from: bucket/build_asset.txt
           to: 's3://web.ymnk.fun'
 workflows:
   s3-example:
