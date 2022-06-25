@@ -37,7 +37,7 @@ jobs:
     executor: default
     steps:
       - run:
-          command: pwd && ls
+          command: pwd && ls -al
       # - aws-s3/sync:
       #     arguments: |
       #       --acl public-read \
