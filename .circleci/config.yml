@@ -40,14 +40,14 @@ jobs:
           at: ~/repo
       - run:
           command: pwd && ls -al
-      # - aws-s3/sync:
-      #     arguments: |
-      #       --acl public-read \
-      #       --acl bucket-owner-full-control \
-      #       --cache-control "max-age=86400"
-      #     from: front
-      #     to: s3://web.ymnk.fun
-      #     overwrite: true
+      - aws-s3/sync:
+          arguments: |
+            --acl public-read \
+            --acl bucket-owner-full-control \
+            --cache-control "max-age=86400"
+          from: build
+          to: s3://web.ymnk.fun
+          overwrite: true
 workflows:
   version: 2
   build-deploy:
