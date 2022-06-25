@@ -4,20 +4,20 @@ orbs:
 executors:
   default:
     docker:
-      - image: circleci/node:16:15
-    working_directory: ~/repo/frontend/react-app
+      - image: cimg/node:16.15-browsers
+    working_directory: ~/repo
 commands:
   npm_install:
     steps:
       - restore_cache:
           keys:
-            - v2-dependencies-{{ checksum "package.json" }}
+            - v2-dependencies-{{ checksum "/frontend/react-app/package.json" }}
             - v2-dependencies-
       - run: npm install
       - save_cache:
           paths:
             - node_modules
-          key: v2-dependencies-{{ checksum "package.json" }}
+          key: v2-dependencies-{{ checksum "/frontend/react-app/package.json" }}
 jobs:
   build:
     executor: default
