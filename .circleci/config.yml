@@ -24,7 +24,7 @@ workflows:
   say-hello-workflow:
     jobs:
       - say-hello
-    filters:
-      branches:
-        only:
-          - main
+          filters:
+            branches:
+              only:
+                - main
