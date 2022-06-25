@@ -9,15 +9,16 @@ executors:
 commands:
   npm_install:
     steps:
+      - run: cd frontend/react-app
       - restore_cache:
           keys:
-            - v2-dependencies-{{ checksum "/frontend/react-app/package.json" }}
+            - v2-dependencies-{{ checksum "package.json" }}
             - v2-dependencies-
       - run: npm install
       - save_cache:
           paths:
             - node_modules
-          key: v2-dependencies-{{ checksum "/frontend/react-app/package.json" }}
+          key: v2-dependencies-{{ checksum "package.json" }}
 jobs:
   build:
     executor: default
