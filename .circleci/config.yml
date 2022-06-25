@@ -36,14 +36,12 @@ jobs:
   deploy:
     executor: default
     steps:
-      - attach_workspace:
-          at: repo/frontend/react-app/build
       - aws-s3/sync:
           arguments: |
             --acl public-read \
             --acl bucket-owner-full-control \
             --cache-control "max-age=86400"
-          from: .
+          from: ./repo/frontend/react-app/build
           to: s3://web.ymnk.fun
           overwrite: true
 workflows:
