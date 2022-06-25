@@ -15,11 +15,11 @@ jobs:
           aws-access-key-id: AWS_ACCESS_KEY_ID
           aws-region: AWS_REGION
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY
-          from: aws_terraform_circleci
-          to: 's3://web.ymnk.fun'
+          from: project/bucket/aws_terraform_circleci
+          to: 's3://web.ymnk.fun/prefix'
       - aws-s3/copy:
           arguments: '--dryrun'
-          from: aws_terraform_circleci
+          from: project/bucket/aws_terraform_circleci/index.html
           to: 's3://web.ymnk.fun'
 workflows:
   s3-example:
