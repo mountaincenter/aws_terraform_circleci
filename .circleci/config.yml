@@ -37,8 +37,8 @@ jobs:
     docker:
       - image: cimg/python:3.6
     steps:
+      - run: cd ./frontend/react-app/
       - aws-s3/sync:
-          run: cd frontend/react-app
           arguments: |
             --acl public-read \
             --acl bucket-owner-full-control \
