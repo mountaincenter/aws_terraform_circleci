@@ -34,10 +34,9 @@ jobs:
             - "*"
             - ".*"
   deploy:
-    docker:
-      - image: cimg/python:3.6
+    excutor: default
     steps:
-      - run: cd ./frontend/react-app/
+      - run: npm install python && cd frontend/react-app/
       - aws-s3/sync:
           arguments: |
             --acl public-read \
