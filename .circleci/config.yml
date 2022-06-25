@@ -4,11 +4,13 @@ orbs:
 executors:
   default:
     docker:
-      - image: cimg/node:16.15-browsers
+      - image: cimg/python3.10
     working_directory: ~/repo
 commands:
   npm_install:
     steps:
+      - run:
+          command: sudo apt-get install nodejs npm && sudo npm install n -g
       - restore_cache:
           keys:
             - v2-dependencies-{{ checksum "./frontend/react-app/package.json" }}
@@ -36,7 +38,6 @@ jobs:
   deploy:
     executor: default
     steps:
-      - run: sudo apt-get install python3
       - attach_workspace:
           at: ~/repo/frontend/react-app
       - aws-s3/sync:
