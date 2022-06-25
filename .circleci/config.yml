@@ -29,15 +29,15 @@ jobs:
       - run:
           command: cd ./frontend/react-app && npm run build
       - persist_to_workspace:
-          root: .
+          root: ./frontend/react-app
           paths:
             - "*"
             - ".*"
   deploy:
     executor: default
     steps:
-      run:
-        command: pwd && ls
+      - run:
+          command: pwd && ls
       # - aws-s3/sync:
       #     arguments: |
       #       --acl public-read \
