@@ -20,7 +20,7 @@ jobs:
 workflows:
   s3-example:
     jobs:
-      - build
+      - build:
           filters:
             branches:
               only: main
