@@ -5,6 +5,7 @@ executors:
   default:
     docker:
       - image: cimg/node:16.15-browsers
+      - image: cimg/python:3.6
     working_directory: ~/repo
 commands:
   npm_install:
