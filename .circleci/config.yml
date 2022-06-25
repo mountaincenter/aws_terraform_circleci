@@ -34,7 +34,8 @@ jobs:
             - "*"
             - ".*"
   deploy:
-    executor: default
+    docker:
+      - image: cimg/python:3.6
     steps:
       - attach_workspace:
           at: ~/repo/frontend/react-app
