@@ -4,7 +4,7 @@ orbs:
 executors:
   default:
     docker:
-      - image: cimg/python3.10
+      - image: cimg/python:3.10-browsers
     working_directory: ~/repo
 commands:
   npm_install:
