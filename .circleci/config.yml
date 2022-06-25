@@ -29,21 +29,23 @@ jobs:
       - run:
           command: cd ./frontend/react-app && npm run build
       - persist_to_workspace:
-          root: frontend/react-app
+          root: .
           paths:
             - "*"
             - ".*"
   deploy:
     executor: default
     steps:
-      - aws-s3/sync:
-          arguments: |
-            --acl public-read \
-            --acl bucket-owner-full-control \
-            --cache-control "max-age=86400"
-          from: ./repo/frontend/react-app/build
-          to: s3://web.ymnk.fun
-          overwrite: true
+      run:
+        command: pwd && ls
+      # - aws-s3/sync:
+      #     arguments: |
+      #       --acl public-read \
+      #       --acl bucket-owner-full-control \
+      #       --cache-control "max-age=86400"
+      #     from: front
+      #     to: s3://web.ymnk.fun
+      #     overwrite: true
 workflows:
   version: 2
   build-deploy:
