@@ -9,26 +9,29 @@ executors:
 commands:
   npm_install:
     steps:
-      - attach_workspace:
-          at: ./frontend/react-app
       - restore_cache:
           keys:
-            - v2-dependencies-{{ checksum "package.json" }}
+            - v2-dependencies-{{ checksum "./frontend/react-app/package.json" }}
             - v2-dependencies-
-      - run: npm install
+      - run:
+          working_directroy: frontend/react-app
+          command: npm install
       - save_cache:
+          working_directroy: frontend/react-app
           paths:
             - node_modules
-          key: v2-dependencies-{{ checksum "package.json" }}
+          key: v2-dependencies-{{ checksum "./frontend/react-app/package.json" }}
 jobs:
   build:
     executor: default
     steps:
       - checkout
       - npm_install
-      - run: npm run build
+      - run:
+          working_directroy: frontend/react-app
+          command: npm run build
       - persist_to_workspace:
-          root: .
+          root: frontend/react-app
           paths:
             - "*"
             - ".*"
@@ -36,7 +39,7 @@ jobs:
     executor: default
     steps:
       - attach_workspace:
-          at: ~/repo
+          at: ~/repo/frontend/react-app
       - aws-s3/sync:
           from: build
           to: s3://web.ymnk.fun
