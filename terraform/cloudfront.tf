@@ -6,6 +6,9 @@ resource "aws_cloudfront_distribution" "main" {
   origin {
     domain_name = "${local.bucket.name}.s3-${var.aws_region}.amazonaws.com"
     origin_id   = "S3-${local.fqdn.name}"
+    s3_origin_config {
+      origin_access_identity = aws_cloudfront_origin_access_identity.main.cloudfront_access_identity_path
+    }
   }
 
   enabled             = true

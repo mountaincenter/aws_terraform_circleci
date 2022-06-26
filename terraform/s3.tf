@@ -1,6 +1,6 @@
 resource "aws_s3_bucket" "cloudfront_logs" {
-  bucket = "${local.fqdn.name}-cloudfront-logs"
-  acl    = "private"
+  bucket        = "${local.fqdn.name}-cloudfront-logs"
+  acl           = "private"
   force_destroy = true
 }
 
