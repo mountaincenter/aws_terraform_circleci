@@ -38,8 +38,6 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/repo
-      - run:
-          command: pwd && ls -al
       - aws-s3/sync:
           arguments: |
             --acl public-read \
